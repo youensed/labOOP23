@@ -55,14 +55,23 @@ namespace OOP_23
             //відрисовка значень на осі Х 
             for(int i = 0; i < pictureBox1.Width; i += 50)
             {
-                if(xValues != 0)
-                    graphic.DrawString(xValues.ToString(), new Font("Times New Roman", 10, FontStyle.Bold), new SolidBrush(Color.Black), new Point(i, pictureBox1.Height / 2));
+                if(xValues != 0 && xValues%3 == 0)
+                    graphic.DrawString((xValues/3).ToString()+"pi", new Font("Times New Roman", 10, FontStyle.Bold), new SolidBrush(Color.Black), new Point(i, pictureBox1.Height / 2));
+                else if (xValues == 0)
+                {
+                    graphic.DrawString(xValues.ToString(), new Font("Times New Roman", 10, FontStyle.Bold), new SolidBrush(Color.Black), new Point(pictureBox1.Width / 2, pictureBox1.Height / 2));
+                    i = pictureBox1.Width / 2;
+                }
                 xValues++;
             }
             
             try
             {
                 float a = float.Parse(textBox1.Text);//отримання даних з textBox1
+                if(a == 0)
+                {
+                    throw new ArgumentNullException();
+                }
 
                 // відрисовка функції Х
                 for (float y = -pictureBox1.Height / 2; y < pictureBox1.Width / 2; y++)
@@ -82,6 +91,10 @@ namespace OOP_23
             {
                 graphic.Clear(Color.White);
                 MessageBox.Show("Не вірний формат введених даних!", "Увага!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ArgumentNullException)
+            {
+                MessageBox.Show("Коефіцієнт не може дорівнювати 0!", "Увага!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
